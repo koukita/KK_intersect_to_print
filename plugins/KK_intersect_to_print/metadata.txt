@@ -8,9 +8,9 @@ about=ポイントレイヤに地図上のクリック位置を保存し、そ�
 version=0.9.3
 author=kouichi kita
 email=qgisshitumon@gmail.com
-homepage=https://github.com/koukita/KK_Create_UTM_Grid
-tracker=https://github.com/koukita/KK_Create_UTM_Grid/issues
-repository=https://github.com/koukita/KK_Create_UTM_Grid
+homepage=https://github.com/koukita/KK_intersect_to_print
+tracker=https://github.com/koukita/KK_intersect_to_print/issues
+repository=https://github.com/koukita/KK_intersect_to_print
 
 category=Vector,attribute
 icon=icon.png
