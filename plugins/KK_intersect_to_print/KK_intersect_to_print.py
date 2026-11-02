@@ -420,7 +420,7 @@ class KKIntersectToPrint:
                 )
             style_result = point_layer.loadNamedStyle(style_path)
             if isinstance(style_result, tuple):
-                style_message, style_loaded = style_result
+                style_loaded, style_message = style_result
                 if not style_loaded:
                     raise RuntimeError(
                         "スタイルファイルを読み込めませんでした: {}".format(
@@ -976,6 +976,12 @@ class KKIntersectToPrint:
             if not layer.addFeature(feature):
                 raise RuntimeError("新しいポイントを追加できませんでした。")
 
+            # 保存前に作成した地物を確認し、保存後には失敗できない状態にします。
+            created_features = iter(layer.getFeatures())
+            created_feature = next(created_features, None)
+            if created_feature is None or next(created_features, None) is not None:
+                raise RuntimeError("作成したポイントを取得できませんでした。")
+
             # 編集コマンドを完了させ、必要なら今回開始した編集を保存します。
             layer.endEditCommand()
             edit_command_active = False
@@ -987,11 +993,6 @@ class KKIntersectToPrint:
                         "\n" + errors if errors else ""
                     )
                 )
-            # 書き込み後に地物を読み直し、属性フォームへ渡す地物を取得します。
-            created_features = iter(layer.getFeatures())
-            created_feature = next(created_features, None)
-            if created_feature is None or next(created_features, None) is not None:
-                raise RuntimeError("作成したポイントを取得できませんでした。")
             return created_feature
         except Exception as error:
             # 処理途中の失敗で一部だけ更新された状態を残さないようにします。
@@ -1008,7 +1009,8 @@ class KKIntersectToPrint:
                     cleanup_errors.append(str(cleanup_error))
             if cleanup_errors:
                 raise RuntimeError(
-                    "編集失敗後のロールバックにも失敗しました: {}".format(
+                    "{}\n編集失敗後のロールバックにも失敗しました: {}".format(
+                        error,
                         "; ".join(cleanup_errors)
                     )
                 ) from error
