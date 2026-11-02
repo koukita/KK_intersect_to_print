@@ -1,0 +1,34 @@
+[general]
+name=KK_intersect_to_print
+qgisMinimumVersion=3.44
+qgisMaximumVersion=4.99
+description=Perform a cross-layer search at a specific location on the map to retrieve attribute values, then output the results as a PDF based on a report layout.：地図上の位置でレイヤを串刺し検索し属性値を取得します。結果を帳票レイアウトからPDF出力します。
+about=ポイントレイヤに地図上のクリック位置を保存し、その位置と交差するベクタレイヤの属性およびラスタレイヤの値を取り込みます。帳票レイアウトのアトラス先頭地物をPDF出力します。
+
+version=0.9.3
+author=kouichi kita
+email=qgisshitumon@gmail.com
+homepage=https://github.com/koukita/KK_Create_UTM_Grid
+tracker=https://github.com/koukita/KK_Create_UTM_Grid/issues
+repository=https://github.com/koukita/KK_Create_UTM_Grid
+
+category=Vector,attribute
+icon=icon.png
+
+changelog=0.9.3 - 2026-10-19
+    - 修正：属性を取得するレイヤリストをポリゴンレイヤのみに限定した。
+    - 修正：交差ポイントを作成する際に、取得する属性フィールドと同じフィールドは削除しないようにした。（ポイント作成時の処理速度向上）
+    - 機能追加：属性を取得するレイヤリストを更新するボタンを追加した。
+
+    0.9.2 - 2026-10-19
+    - UI改善：属性を取得するレイヤリストはレイヤパネルと同じ並びにした。
+    - 機能追加：レイヤパネルで表示しているレイヤにチェックを付けるボタンを追加した。
+
+    0.9.1 - 2026-10-16
+    - 修正：設定ファイル名にプロジェクトファイル名を含め、プロジェクトごとに分けて保存・読み込みするようにした。
+    - 修正：交差ポイントにデータが２つ以上ある場合は実行しないようにした。
+    - UI改善：設定保存・読み込みボタンにアイコンを追加し、SVGファイルをSVGフォルダーに整理した。
+    - 機能追加：交差ポイントの新規作成時に、point_style.qmlのスタイルを適用するようにした。
+
+    0.9.0 - 2026-10-14
+    - 初版公開

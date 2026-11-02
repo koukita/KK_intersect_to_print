@@ -1,0 +1,54 @@
+{
+  "point_layer_id": "_______8ecf8342_9b91_4bf7_92aa_fd0b98f56db1",
+  "point_layer_name": "交差ポイント",
+  "point_layer_source": "C:\\GISデータ\\31_ツール、プラグイン\\【自作】クリック地点のレイヤを串刺し検索して属性表示→印刷\\QGISサンプル\\データ\\交差ポイント.gpkg|layername=交差ポイント",
+  "point_layer_provider": "ogr",
+  "layout_name": null,
+  "search_layers": [
+    {
+      "id": "_385dac60_21ce_425c_927c_674f862e596a",
+      "name": "地理院地図　淡色",
+      "checked": false
+    },
+    {
+      "id": "____6a2550d8_3942_4f11_b462_5e8fe7a85c0a",
+      "name": "森林地域_埼玉県 — 国有林",
+      "checked": true
+    },
+    {
+      "id": "____7039fa44_10a6_4a6e_afeb_ebeabfb3d083",
+      "name": "森林地域_埼玉県 — 保安林",
+      "checked": true
+    },
+    {
+      "id": "____826a069c_ba59_4ac6_aa1f_3605a025690c",
+      "name": "森林地域_埼玉県 — 民有林",
+      "checked": true
+    },
+    {
+      "id": "_____0f62b79f_bb2c_4b1b_86f1_43d635207a49",
+      "name": "土地利用",
+      "checked": true
+    },
+    {
+      "id": "_____15737fa4_ca7c_4ee5_87ab_bb895089d250",
+      "name": "農業地域_埼玉県 — 農業地域",
+      "checked": true
+    },
+    {
+      "id": "______920632ef_24ae_48e6_93ce_c54376d1fae6",
+      "name": "農業地域_埼玉県 — 農用地区域",
+      "checked": true
+    },
+    {
+      "id": "_________63a23b22_2422_4af0_bb42_937327a594fc",
+      "name": "大規模盛土造成地",
+      "checked": true
+    },
+    {
+      "id": "__________8ec2d2b6_fc81_43dd_97cb_aff9751c8c64",
+      "name": "市町村境界_埼玉県",
+      "checked": true
+    }
+  ]
+}
