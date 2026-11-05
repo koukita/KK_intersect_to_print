@@ -38,25 +38,12 @@ from qgis.core import (
 )
 from qgis.gui import QgsMapToolEmitPoint
 
-CHECKED = Qt.Checked if hasattr(Qt, "Checked") else Qt.CheckState.Checked
-UNCHECKED = Qt.Unchecked if hasattr(Qt, "Unchecked") else Qt.CheckState.Unchecked
-# Qtのバージョンにより定数の置き場所が異なるため、新旧両方に対応します。
-ITEM_IS_USER_CHECKABLE = (
-    Qt.ItemIsUserCheckable
-    if hasattr(Qt, "ItemIsUserCheckable")
-    else Qt.ItemFlag.ItemIsUserCheckable
-)
-USER_ROLE = Qt.UserRole if hasattr(Qt, "UserRole") else Qt.ItemDataRole.UserRole
-SIZE_POLICY_IGNORED = (
-    QSizePolicy.Policy.Ignored
-    if hasattr(QSizePolicy, "Policy")
-    else QSizePolicy.Ignored
-)
-SIZE_POLICY_PREFERRED = (
-    QSizePolicy.Policy.Preferred
-    if hasattr(QSizePolicy, "Policy")
-    else QSizePolicy.Preferred
-)
+CHECKED = Qt.CheckState.Checked
+UNCHECKED = Qt.CheckState.Unchecked
+ITEM_IS_USER_CHECKABLE = Qt.ItemFlag.ItemIsUserCheckable
+USER_ROLE = Qt.ItemDataRole.UserRole
+SIZE_POLICY_IGNORED = QSizePolicy.Policy.Ignored
+SIZE_POLICY_PREFERRED = QSizePolicy.Policy.Preferred
 
 # QGISのバージョンによる文字列型の違いを吸収し、文字列フィールドを作ります。
 try:
@@ -222,11 +209,7 @@ class KKIntersectToPrint:
         self.toolbar.addAction(self.action)
 
         # QGISのバージョンに応じた定数で、ドックを画面右側に配置します。
-        right_area = (
-            Qt.DockWidgetArea.RightDockWidgetArea
-            if hasattr(Qt, "DockWidgetArea")
-            else Qt.RightDockWidgetArea
-        )
+        right_area = Qt.DockWidgetArea.RightDockWidgetArea
         self.iface.addDockWidget(right_area, self.dock)
         # 各ボタンが押されたときに実行する処理を登録します。
         self.map_tool = _PointCaptureTool(self)
@@ -295,7 +278,8 @@ class KKIntersectToPrint:
             for layer in self.project.mapLayers().values()
             if layer.isValid()
             and layer.type() == Qgis.LayerType.Vector
-            and QgsWkbTypes.geometryType(layer.wkbType()) == QgsWkbTypes.PointGeometry
+            and QgsWkbTypes.geometryType(layer.wkbType())
+            == QgsWkbTypes.GeometryType.PointGeometry
         ]
 
         # 項目の入れ替え中に選択変更イベントが連続発生しないよう一時停止します。
@@ -420,12 +404,17 @@ class KKIntersectToPrint:
                 )
             style_result = point_layer.loadNamedStyle(style_path)
             if isinstance(style_result, tuple):
-                style_loaded, style_message = style_result
+                style_message, style_loaded = style_result
                 if not style_loaded:
                     raise RuntimeError(
                         "スタイルファイルを読み込めませんでした: {}".format(
-                            style_message
+                            style_message or "QGISが詳細を返しませんでした。"
                         )
+                    )
+            elif isinstance(style_result, bool):
+                if not style_result:
+                    raise RuntimeError(
+                        "スタイルファイルを読み込めませんでした。"
                     )
             elif style_result:
                 raise RuntimeError(
@@ -451,7 +440,7 @@ class KKIntersectToPrint:
                 if layer.isValid()
                 and layer.type() == Qgis.LayerType.Vector
                 and QgsWkbTypes.geometryType(layer.wkbType())
-                == QgsWkbTypes.PointGeometry
+                == QgsWkbTypes.GeometryType.PointGeometry
             ),
             None,
         )
@@ -483,7 +472,7 @@ class KKIntersectToPrint:
                 continue
             if (
                 layer.type() != Qgis.LayerType.Vector
-                or layer.geometryType() != QgsWkbTypes.PolygonGeometry
+                or layer.geometryType() != QgsWkbTypes.GeometryType.PolygonGeometry
             ):
                 continue
 
@@ -836,7 +825,7 @@ class KKIntersectToPrint:
                     raise RuntimeError("レイヤが無効です。")
 
                 if layer.type() == Qgis.LayerType.Vector:
-                    if layer.geometryType() != QgsWkbTypes.PolygonGeometry:
+                    if layer.geometryType() != QgsWkbTypes.GeometryType.PolygonGeometry:
                         continue
                     # 地図の座標系から検索レイヤの座標系へ変換して検索します。
                     point = self._transform_geometry(
@@ -1062,7 +1051,7 @@ class KKIntersectToPrint:
                 result, export_error = export_result
             else:
                 result, export_error = export_result, ""
-            if result != QgsLayoutExporter.Success:
+            if result != QgsLayoutExporter.ExportResult.Success:
                 raise RuntimeError(
                     "PDFの書き出しに失敗しました（エラーコード: {}）。{}".format(
                         result, "\n" + export_error if export_error else ""
@@ -1140,7 +1129,8 @@ class KKIntersectToPrint:
             layer is None
             or not layer.isValid()
             or layer.type() != Qgis.LayerType.Vector
-            or QgsWkbTypes.geometryType(layer.wkbType()) != QgsWkbTypes.PointGeometry
+            or QgsWkbTypes.geometryType(layer.wkbType())
+            != QgsWkbTypes.GeometryType.PointGeometry
         ):
             return None
         return layer

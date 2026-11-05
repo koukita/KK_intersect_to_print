@@ -5,7 +5,7 @@ qgisMaximumVersion=4.99
 description=Perform a cross-layer search at a specific location on the map to retrieve attribute values, then output the results as a PDF based on a report layout.：地図上の位置でレイヤを串刺し検索し属性値を取得します。結果を帳票レイアウトからPDF出力します。
 about=ポイントレイヤに地図上のクリック位置を保存し、その位置と交差するベクタレイヤの属性およびラスタレイヤの値を取り込みます。帳票レイアウトのアトラス先頭地物をPDF出力します。
 
-version=0.9.3
+version=0.9.4
 author=kouichi kita
 email=qgisshitumon@gmail.com
 homepage=https://github.com/koukita/KK_intersect_to_print
@@ -15,7 +15,12 @@ repository=https://github.com/koukita/KK_intersect_to_print
 category=Vector,attribute
 icon=icon.png
 
-changelog=0.9.3 - 2026-10-19
+changelog=
+    0.9.4 - 2026-11-05
+    - 修正：ポイント新規作成時にスタイルファイルが読み込めないエラーが表示されるのを修正した
+    - 修正：Qt6対応を修正
+    
+    0.9.3 - 2026-10-19
     - 修正：属性を取得するレイヤリストをポリゴンレイヤのみに限定した。
     - 修正：交差ポイントを作成する際に、取得する属性フィールドと同じフィールドは削除しないようにした。（ポイント作成時の処理速度向上）
     - 機能追加：属性を取得するレイヤリストを更新するボタンを追加した。
